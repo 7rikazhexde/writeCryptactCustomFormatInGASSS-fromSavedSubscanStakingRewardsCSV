@@ -1,2 +1,2 @@
-# createCryptactCustomFormatInGASSS-fromSavedSubscanStakingRewardsCSV
+# writeCryptactCustomFormatInGASSS-fromSavedSubscanStakingRewardsCSV
 GASでSubscanのCSVファイルをクリプタクトのカスタムファイルフォーマットに書き出すソースコード
