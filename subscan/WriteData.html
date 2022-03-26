@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <title>データ書き出し</title>
+  <script type="text/javascript">
+    function OnButtonClick() {
+      var checkValue = '';
+      var writeDataTypeRadio = document.getElementsByName('writeDataType');
+      var len = writeDataTypeRadio.length;
+      for (var i = 0; i < len; i++){
+        if (writeDataTypeRadio.item(i).checked){
+          checkValue = writeDataTypeRadio.item(i).value;
+        }
+      }
+      var textbox = document.getElementById("rowParam");
+      var inputValue = textbox.value;
+      google.script.run.checkWriteNum(inputValue,checkValue);
+    }
+  </script>
+
+</head>
+<body>
+  <div>
+    <label>書き込み対象 </label>
+    <label><input type="radio" name="writeDataType" value="DOT" checked>DOT</label>
+    <label><input type="radio" name="writeDataType" value="ASTR">ASTR</label>
+  <div>
+  <div>
+    <label>件数 <input id="rowParam" type="number"></label>
+    <input type="button" value="実行" onclick="OnButtonClick();"/>
+  <div>
+</body>
+</html>
