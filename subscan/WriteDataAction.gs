@@ -38,6 +38,31 @@ function checkWriteNum(num,checkValue){
   // 下記メッセージの形式であればlastRow -1でもNaNとはならず表示されますが、readTextGASFileOpen関数と合わせてデクリメントします。
   lastRow--;
 
+  var dotAction = thsh.getRange(2, 7).getValue()
+  var astarAction = thsh.getRange(2, 6).getValue()
+
+  if(checkValue == "DOT"){
+    if(dotAction != "Staking(Rewarded)"){
+      // Uiクラスを使用して書込み上限エラーメッセージダイアログ(タイトルとOKボタン）を表示
+      var ui = SpreadsheetApp.getUi();
+      var title = "書き込みファイルエラー"
+      var message = "DOTの指定で入力してください"
+      ui.alert(title, message, ui.ButtonSet.OK);
+      return;
+    }
+  }
+
+  if(checkValue == "ASTR"){
+    if(astarAction != "dappsstaking(Reward)"){
+      // Uiクラスを使用して書込み上限エラーメッセージダイアログ(タイトルとOKボタン）を表示
+      var ui = SpreadsheetApp.getUi();
+      var title = "書き込みファイルエラー"
+      var message = "ASTRの指定で入力してください。"
+      ui.alert(title, message, ui.ButtonSet.OK);
+      return;
+    }
+  }
+
   // 件数チェック
   if(num <= 0){
     // Uiクラスを使用して書込み上限エラーメッセージダイアログ(タイトルとOKボタン）を表示
@@ -45,6 +70,7 @@ function checkWriteNum(num,checkValue){
     var title = "読み込み数値エラー"
     var message = "正の整数で入力してください。"
     ui.alert(title, message, ui.ButtonSet.OK);
+    return;
   }
   // 読込み件数が最終行(項目行を除く)より大きい場合
   else if (num > lastRow){
@@ -53,30 +79,30 @@ function checkWriteNum(num,checkValue){
     var title = "読み出し上限エラー"
     var message = lastRow + "件以下で入力してください。"
     ui.alert(title, message, ui.ButtonSet.OK);
+    return;
   }
-  else{
-    // ステーキング報酬履歴を入力件数分customDataシートに書き出す
-    if(checkValue == "DOT"){
-      // 書き出し前にシートを全てクリアする
-      customDataDotSheetClear();
-      writeDataCryptactFormatFromDotSubscan(num);
-    }
-    else if(checkValue == "ASTR"){
-      // 書き出し前にシートを全てクリアする
-      customDataAstarSheetClear();
-      writeDataCryptactFormatFromAstarSubscan(num);
-    }
-    // Uiクラスを使用して書き出し成功メッセージダイアログ(タイトルとOKボタン）を表示
-    var ui = SpreadsheetApp.getUi();
-    var title = "書き出し成功"
-    if(checkValue == "DOT"){
-      var message = "customDataDotシートに" + checkValue + "を" + num + "件書き出しました。"
-    }
-    else if(checkValue == "ASTR"){
-      var message = "customDataAstarシートに" + checkValue + "を" + num + "件書き出しました。"
-    }
-    ui.alert(title, message, ui.ButtonSet.OK);
+
+  // ステーキング報酬履歴を入力件数分customDataシートに書き出す
+  if(checkValue == "DOT"){
+    // 書き出し前にシートを全てクリアする
+     customDataDotSheetClear();
+     writeDataCryptactFormatFromDotSubscan(num);
   }
+  else if(checkValue == "ASTR"){
+    // 書き出し前にシートを全てクリアする
+    customDataAstarSheetClear();
+    writeDataCryptactFormatFromAstarSubscan(num);
+  }
+  // Uiクラスを使用して書き出し成功メッセージダイアログ(タイトルとOKボタン）を表示
+  var ui = SpreadsheetApp.getUi();
+  var title = "書き出し成功"
+  if(checkValue == "DOT"){
+    var message = "customDataDotシートに" + checkValue + "を" + num + "件書き出しました。"
+  }
+  else if(checkValue == "ASTR"){
+    var message = "customDataAstarシートに" + checkValue + "を" + num + "件書き出しました。"
+  }
+  ui.alert(title, message, ui.ButtonSet.OK);
 }
 
 /**
